@@ -21,10 +21,10 @@ jobs:
           ndk-version: r21e
 
       - name: Setup Java JDK
-        uses: actions/setup-java@v3  # Usa la versión v3 de setup-java
+        uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'    # Usa Temurin (Adoptium) como distribución de Java
-          java-version: 17           # Cambia a Java 17
+          distribution: 'temurin'
+          java-version: 17
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v2
@@ -34,20 +34,20 @@ jobs:
         with:
           haxe-version: 4.2.5
 
-      - name: Install Haxelib
+      - name: Configure Haxelib
         run: |
           haxelib setup ~/haxelib
-          haxelib install hxcpp > /dev/null
-          haxelib install lime
-          haxelib install openfl
-          haxelib --never install flixel
-          haxelib run lime setup flixel
-          haxelib install flixel-ui
-          haxelib install flixel-addons
-          haxelib git linc_luajit https://github.com/jigsaw-4277821/linc_luajit.git
-          haxelib git newgrounds https://github.com/Geokureli/Newgrounds.git
-          haxelib git extension-androidtools https://github.com/MAJigsaw77/extension-androidtools.git
-          haxelib list
+          haxelib --global install hxcpp > /dev/null
+          haxelib --global install lime
+          haxelib --global install openfl
+          haxelib --global --never install flixel
+          haxelib --global run lime setup flixel
+          haxelib --global install flixel-ui
+          haxelib --global install flixel-addons
+          haxelib --global git linc_luajit https://github.com/jigsaw-4277821/linc_luajit.git
+          haxelib --global git newgrounds https://github.com/Geokureli/Newgrounds.git
+          haxelib --global git extension-androidtools https://github.com/MAJigsaw77/extension-androidtools.git
+          haxelib --global list
 
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION
