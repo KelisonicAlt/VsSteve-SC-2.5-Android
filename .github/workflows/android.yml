@@ -1,32 +1,18 @@
-# This is a basic workflow to help you get started with Actions
-
 name: CI
 
-# Controls when the action will run.
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   buildAndroid:
     runs-on: ubuntu-latest
     steps:
-      - name: Save state
-        run: echo "::save-state name={name}::{value}"
-
-      - name: Set output
-        run: echo "::set-output name={name}::{value}"
-        
       - name: Checkout
-        uses: actions/checkout@v2.298.2
+        uses: actions/checkout@v2.3.1
 
       - name: Setup Android NDK
         uses: nttld/setup-ndk@v1
