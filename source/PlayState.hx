@@ -589,7 +589,7 @@ class PlayState extends MusicBeatState
 			{
 					curStage = 'notch';
 
-					defaultCamZoom = 0.7;
+					defaultCamZoom = 0.4;
 					camMovement = 0.2;
 
 					var templeBG = new FlxSprite().loadGraphic(Paths.image('temple/templeBG'));
