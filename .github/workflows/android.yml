@@ -1,38 +1,43 @@
+# This is a basic workflow to help you get started with Actions
+
 name: CI
 
+# Controls when the action will run.
 on:
+  # Triggers the workflow on push or pull request events but only for the master branch
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  # This workflow contains a single job called "build"
   buildAndroid:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4  # Actualizado a la última versión
+        uses: actions/checkout@v2.3.1
 
       - name: Setup Android NDK
-        uses: nttld/setup-ndk@v2  # Actualizado a la última versión
+        uses: nttld/setup-ndk@v1
         id: setup-ndk
         with:
           ndk-version: r21e
 
       - name: Setup Java JDK
-        uses: actions/setup-java@v3  # Actualizado a la última versión
+        uses: actions/setup-java@v1
         with:
           java-version: 11
 
       - name: Setup Android SDK
-        uses: android-actions/setup-android@v3  # Actualizado a la última versión
-        id: setup-android
-        with:
-          android-sdk-version: "30"  # Especifica la versión del SDK que necesitas
+        uses: android-actions/setup-android@v3
 
       - name: Setup Haxe
-        uses: krdlab/setup-haxe@v2  # Actualizado a la última versión
+        uses: krdlab/setup-haxe@v1.1.5
         with:
           haxe-version: 4.2.5
 
@@ -52,7 +57,7 @@ jobs:
           haxelib list
 
       - name: Create Version Tag
-        run: echo "${{ github.run_id }}" > VERSION
+        run: echo "${{github.run_id}}" > VERSION
 
       - name: Setup Lime
         run: |
@@ -63,10 +68,9 @@ jobs:
           haxelib run lime config ANDROID_SETUP true
         env:
           ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
-          ANDROID_HOME: ${{ steps.setup-android.outputs.android-home }}
 
       - name: Compile
-        run: haxelib run lime build android --app-version="4.0.0-${{ github.run_id }}"
+        run: haxelib run lime build android --app-version="4.0.0-${{ github.run_id}}"
 
       - name: Publish Artifact
         uses: actions/upload-artifact@v4
