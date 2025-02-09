@@ -28,6 +28,9 @@ jobs:
         with:
           ndk-version: r21e
 
+      - name: Save NDK Path
+        run: echo "NDK_PATH=${{ steps.setup-ndk.outputs.ndk-path }}" >> $GITHUB_ENV
+      
       - name: Setup Java JDK
         uses: actions/setup-java@v1
         with:
